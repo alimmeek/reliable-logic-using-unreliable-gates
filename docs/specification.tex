@@ -13,14 +13,20 @@
 \maketitle
 
 \section{Abstract}
-As logic gates get smaller with increased transistor density, components are at the nanoscale where physical limits 
-are approached with high levels of variability and manufacturing defects. This makes the gates less reliable and 
-ways to tolerate faults are needed. These can be based on particular architectures or error correcting codes. Here, 
-the project will investigate the options and build a simulation to demonstrate the operation of an established 
-practice.
+An investigation into hardware solutions to tolerate faults, which can be based on particular architectures or error 
+correcting codes (ECCs). Here, the project will investigate the options and build a simulation to demonstrate the 
+operation of an established method.
+
 
 \section{Problem}
-
+As logic gates get smaller with increased transistor density, components are at the nanoscale where physical limits 
+are approached with high levels of variability and manufacturing defects. At these limits, quantum mechanics comes 
+into play: where electronic barriers were once thick enough to block current, they are now thin enough that electrons 
+can simply ignore it -- a phenomenon known as \emph{quantum tunnelling}. It has been identified that by reducing the 
+thickness of the \emph{gate oxide} -- a transistor component which electrically separates the gate (responsible for 
+turning the transistor on and off) from the current-carrying channel -- to anything much less than a nanometre will 
+result in too much current flowing across the channel when the transistor is “off”. This on its own, however, is 
+only one of several leakage points, hence methods of fault tolerance are required.
 
 
 \section{Objectives}
@@ -45,13 +51,20 @@ project, but are not necessary for its successful completion.
     \item Select another method to simulate and compare the relative effectiveness of each
 \end{itemize}
 
+
 \section{Methodology} \label{sec:meth}
-Since we are working with hardware, it makes sense to make use of a hardware description language (HDL) to simulate 
-their behaviour. \texttt{SystemVerilog} is chosen here, over \texttt{Verilog}, owing to its ability to simulate 
-electronic systems, as well as its support for datatypes such as enum, union, struct, string and class. It also 
-allows for coverages design, which will ensure that test cases of interest (one gate errors, final gate errors, all 
-gates error, etc.). Modules will be built to implement each of the gates, as well as the error probability. We can 
-pass the error probability into the top-level module as a parameter, meaning it can be varied independent of the 
+In this project, we use the Von Neumann error model: a \emph{Von Neumann erroneous gate} is simply an ideal logic 
+gate (one which never errors) cascaded with an error injecting XOR gate. The XOR gate takes a one as input with some 
+probability $p$, called the \emph{gate error probability}, as well as the output from the ideal gate. This can be 
+used to simulate the gate randomly inducing a bit flip. The chosen architecture or ECC will be implemented using 
+these gates to determine how resilient it is to individual gate failures. \\
+
+\noindent Since we are working with hardware, it makes sense to make use of a hardware description language (HDL) to 
+simulate their behaviour. \texttt{SystemVerilog} is chosen here, over \texttt{Verilog}, owing to its ability to 
+simulate electronic systems, as well as its support for datatypes such as enum, union, struct, string and class. It 
+also allows for coverages design, which will ensure that test cases of interest (one gate errors, final gate errors, 
+all gates error, etc.). Modules will be built to implement each of the gates, as well as the error probability. We 
+can pass the error probability into the top-level module as a parameter, meaning it can be varied independent of the 
 designed architecture. \\
 
 \noindent A testbench will be designed to drive the module. Once this has been realised, simulation software will be 
@@ -65,11 +78,17 @@ does not typically have graphing capabilities; hence I now propose several alter
     manipulate Excel spreadsheets. 
     \item The code underpinning the \texttt{matplotlib} library is \texttt{MATLAB}, hence making it itself a strong 
     candidate for graph generation. Further, its import wizard would ease handling the spreadsheet as the data could 
-    be simply imported into a \texttt{MATLAB} matrix, and the data plotted with minimal effort. 
+    be simply imported into a \texttt{MATLAB} matrix, and the data plotted with minimal effort.
 \end{itemize}
+
+\noindent For each architecture and ECC simulated, I will look at two metrics: how high the gate error probability 
+can be set before performance begins to fail, and the trade-off between any additional latency and the error 
+correction performance. If time has allowed multiple methods to have been simulated, I will also compare their 
+performances with each other.
 
 
 \section{Timetable}
+
 
 
 \section{Resources \& Risks}
