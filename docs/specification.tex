@@ -4,6 +4,9 @@
 \usepackage{graphicx}
 \usepackage[colorlinks=false]{hyperref}
 \usepackage{url}
+\usepackage{pdfpages}
+\usepackage{pdflscape}
+
 
 \title{CS351 Specification: Reliable Logic Using Unreliable Gates}
 \author{Alia Meek, 2106850}
@@ -11,6 +14,7 @@
 
 \begin{document}
 \maketitle
+
 
 \section{Abstract}
 An investigation into hardware solutions to tolerate faults, which can be based on particular architectures or error 
@@ -26,7 +30,7 @@ can simply ignore it -- a phenomenon known as \emph{quantum tunnelling}. It has 
 thickness of the \emph{gate oxide} -- a transistor component which electrically separates the gate (responsible for 
 turning the transistor on and off) from the current-carrying channel -- to anything much less than a nanometre will 
 result in too much current flowing across the channel when the transistor is “off”. This on its own, however, is 
-only one of several leakage points, hence methods of fault tolerance are required.
+only one of several leakage points, hence methods of fault tolerance are required.\cite{ref1}
 
 
 \section{Objectives}
@@ -55,9 +59,9 @@ project, but are not necessary for its successful completion.
 \section{Methodology} \label{sec:meth}
 In this project, we use the Von Neumann error model: a \emph{Von Neumann erroneous gate} is simply an ideal logic 
 gate (one which never errors) cascaded with an error injecting XOR gate. The XOR gate takes a one as input with some 
-probability $p$, called the \emph{gate error probability}, as well as the output from the ideal gate. This can be 
-used to simulate the gate randomly inducing a bit flip. The chosen architecture or ECC will be implemented using 
-these gates to determine how resilient it is to individual gate failures. \\
+probability $p$, called the \emph{gate error probability}, as well as the output from the ideal gate. \cite{ref2} 
+This can be used to simulate the gate randomly inducing a bit flip. The chosen architecture or ECC will be 
+implemented using these gates to determine how resilient it is to individual gate failures. \\
 
 \noindent Since we are working with hardware, it makes sense to make use of a hardware description language (HDL) to 
 simulate their behaviour. \texttt{SystemVerilog} is chosen here, over \texttt{Verilog}, owing to its ability to 
@@ -74,8 +78,8 @@ correction, in order to get a baseline for runtime and error rate. To improve re
 does not typically have graphing capabilities; hence I now propose several alternative candidates for graphing.
 \begin{itemize}
     \item \texttt{Python} has an extensive graphing library, \texttt{matplotlib}, which could be used to generate 
-    the required graphs. Additionally, a further library, \texttt{openpyxl}, exists which can be used to easily 
-    manipulate Excel spreadsheets. 
+    the required graphs. \cite{ref3} Additionally, a further library, \texttt{openpyxl}, exists which can be used to 
+    easily manipulate Excel spreadsheets. \cite{ref4}
     \item The code underpinning the \texttt{matplotlib} library is \texttt{MATLAB}, hence making it itself a strong 
     candidate for graph generation. Further, its import wizard would ease handling the spreadsheet as the data could 
     be simply imported into a \texttt{MATLAB} matrix, and the data plotted with minimal effort.
@@ -87,10 +91,6 @@ correction performance. If time has allowed multiple methods to have been simula
 performances with each other.
 
 
-\section{Timetable}
-
-
-
 \section{Resources \& Risks}
 \subsection{Resources}
 The project requires use of a computer and a simulation software capable of supporting \texttt{SystemVerilog}. At 
@@ -100,18 +100,32 @@ not possess the software, I will look into acquiring a license myself.
 
 \subsection{Risks}
 The primary device that will be used during the project is my personal laptop, therefore, there is a risk of losing 
-progress in the event of system failure. Using git and GitHub will not only allow the project to be downloaded onto 
-another system, but it also provides version control in the event that work needs to be undone. To reduce the impact 
-of data loss, the repository will be synced, at minimum, weekly with the local machine; though this may happen more 
-frequently if waiting for a full week would increase the risk of significant loss (e.g., I was particularly 
-productive on a day and complete a large portion of the code). Secondary machines capable of supporting the project 
-are available in both the School of Engineering and Department of Computer Science Computer Labs.
+progress in the event of system failure. Using \texttt{git} and \texttt{GitHub} will not only allow the project to 
+be downloaded onto another system, but it also provides version control in the event that work needs to be undone. 
+To reduce the impact of data loss, the repository will be synced, at minimum, weekly with the local machine; though 
+this may happen more frequently if waiting for a full week would increase the risk of significant loss (e.g., I was 
+particularly productive on a day and complete a large portion of the code). Secondary machines capable of supporting 
+the project are available in both the School of Engineering and Department of Computer Science Computer Labs.
 
 
 \section{Legal, Social, Ethical and Professional Issues \& Considerations}
 No such issues have been identified.
 
 
-% \bibliographystyle{ieeetr}
-% \bibliography{bibliography}
+\begin{landscape}
+    \section{Timetable}
+
+    \noindent\centerline{\includegraphics[scale=0.7]{chart.pdf}} \\
+
+    \noindent The Christmas Holidays have been left for revision for an exam in week one of the second term. A 
+    timetable for term two cannot be completely determined yet as not all deadlines have been set and delays in term 
+    one may stall progress. The term will focus on continuing implementation of the model, as well as meeting any 
+    extension objectives. In terms of deliverables, work on my presentation will begin in the first few weeks, 
+    whereas I will begin my final report after the oral presentation has been given.
+\end{landscape}
+
+
+\bibliographystyle{ieeetr}
+\bibliography{bibliography}
+
 \end{document}

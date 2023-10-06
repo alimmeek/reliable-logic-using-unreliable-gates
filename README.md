@@ -7,7 +7,7 @@ An investigation into hardware solutions to tolerate faults, which can be based 
 As logic gates get smaller with increased transistor density, components are at the nanoscale where physical limits are approached with high levels of variability and manufacturing defects. At these limits, quantum mechanics comes into play: where electronic barriers were once thick enough to block current, they are now thin enough that electrons can simply ignore it – a phenomenon known as _quantum tunnelling_. It has been identified that by reducing the thickness of the _gate oxide_ – a transistor component which electrically separates the gate (responsible for turning the transistor on and off) from the current-carrying channel – to anything much less than a nanometre will result in too much current flowing across the channel when the transistor is “off”. This on its own, however, is only one of several leakage points, hence methods of fault tolerance are required.
 
 ## Objectives
-The objectives have been listed below, with a more detailed description of implementation given under Methodology.
+The objectives have been listed below, with a more detailed description of implementation given under [#methodology](Methodology).
 ### Essential
 These are the minimum requirements in order for the goals of the project to have been achieved.
   - Research the various proposed architectures and ECCs.
