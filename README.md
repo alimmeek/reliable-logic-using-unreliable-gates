@@ -9,7 +9,7 @@ As logic gates get smaller with increased transistor density, components are at 
 
 
 ## Objectives
-The objectives have been listed below, with a more detailed description of implementation given under [#methodology](Methodology).
+The objectives have been listed below, with a more detailed description of implementation given under [Methodology](#methodology).
 
 ### Essential
 These are the minimum requirements in order for the goals of the project to have been achieved.
@@ -26,9 +26,7 @@ project, but are not necessary for its successful completion.
 
 
 ## Methodology
-In this project, we use the Von Neumann error model: a _Von Neumann erroneous gate_ is simply an ideal logic gate (one which never errors) cascaded with an error injecting XOR gate. The XOR gate takes a one as input with some probability _p_, called the _gate error probability_, as well as the output from the ideal gate. [2] This can be used to simulate the gate randomly inducing a bit flip. The chosen architecture or ECC will be 
-implemented using these gates to determine how resilient it is to individual gate failures.
-
+In this project, we use the Von Neumann error model: a _Von Neumann erroneous gate_ is simply an ideal logic gate (one which never errors) cascaded with an error injecting XOR gate. The XOR gate takes a one as input with some probability _p_, called the _gate error probability_, as well as the output from the ideal gate. [2] This can be used to simulate the gate randomly inducing a bit flip. The chosen architecture or ECC will be implemented using these gates to determine how resilient it is to individual gate failures.
 
 Since we are working with hardware, it makes sense to make use of a hardware description language (HDL) to simulate their behaviour. `SystemVerilog` is chosen here, over `Verilog`, owing to its ability to simulate electronic systems, as well as its support for datatypes such as enum, union, struct, string and class. It also allows for coverages design, which will ensure that test cases of interest (one gate errors, final gate errors, all gates error, etc.). Modules will be built to implement each of the gates, as well as the error probability. We can pass the error probability into the top-level module as a parameter, meaning it can be varied independent of the designed architecture.
 
@@ -47,7 +45,7 @@ performances with each other.
 The project requires use of a computer and a simulation software capable of supporting \texttt{SystemVerilog}. At the time of writing, I have emailed the SCRTP facilities team to enquire if they have such software and whether I could be granted use, but they have not yet responded. In the event that either I am not given access, or they do not possess the software, I will look into acquiring a license myself.
 
 ### Risks
-The primary device that will be used during the project is my personal laptop, therefore, there is a risk of losing progress in the event of system failure. Using \texttt{git} and \texttt{GitHub} will not only allow the project to be downloaded onto another system, but it also provides version control in the event that work needs to be undone. To reduce the impact of data loss, the repository will be synced, at minimum, weekly with the local machine; though this may happen more frequently if waiting for a full week would increase the risk of significant loss (e.g., I was particularly productive on a day and complete a large portion of the code). Secondary machines capable of supporting the project are available in both the School of Engineering and Department of Computer Science Computer Labs.
+The primary device that will be used during the project is my personal laptop, therefore, there is a risk of losing progress in the event of system failure. Using `git` and `GitHub` will not only allow the project to be downloaded onto another system, but it also provides version control in the event that work needs to be undone. To reduce the impact of data loss, the repository will be synced, at minimum, weekly with the local machine; though this may happen more frequently if waiting for a full week would increase the risk of significant loss (e.g., I was particularly productive on a day and complete a large portion of the code). Secondary machines capable of supporting the project are available in both the School of Engineering and Department of Computer Science Computer Labs.
 
 
 ## Legal, Social, Ethical and Professional Issues & Considerations
@@ -55,7 +53,7 @@ No such issues have been identified.
 
 
 ## Timetable
-<embed src="https://github.com/alimmeek/reliable-logic-using-unreliable-gates/blob/main/docs/chart.pdf" width="500" height="375" type="application/pdf">
+The proposed timetable for term 1 can be viewed [here](https://github.com/alimmeek/reliable-logic-using-unreliable-gates/blob/main/docs/chart.pdf).
 
 The Christmas Holidays have been left for revision for an exam in week one of the second term. A timetable for term two cannot be completely determined yet as not all deadlines have been set and delays in term one may stall progress. The term will focus on continuing implementation of the model, as well as meeting any extension objectives. In terms of deliverables, work on my presentation will begin in the first few weeks, whereas I will begin my final report after the oral presentation has been given.
 
