@@ -42,7 +42,7 @@ performances with each other.
 
 ## Resources & Risks
 ### Resources
-The project requires use of a computer and a simulation software capable of supporting \texttt{SystemVerilog}. At the time of writing, I have emailed the SCRTP facilities team to enquire if they have such software and whether I could be granted use, but they have not yet responded. In the event that either I am not given access, or they do not possess the software, I will look into acquiring a license myself.
+The project requires use of a computer and a simulation software capable of supporting `SystemVerilog`. At the time of writing, I have emailed the SCRTP facilities team to enquire if they have such software and whether I could be granted use, but they have not yet responded. In the event that either I am not given access, or they do not possess the software, I will look into acquiring a license myself.
 
 ### Risks
 The primary device that will be used during the project is my personal laptop, therefore, there is a risk of losing progress in the event of system failure. Using `git` and `GitHub` will not only allow the project to be downloaded onto another system, but it also provides version control in the event that work needs to be undone. To reduce the impact of data loss, the repository will be synced, at minimum, weekly with the local machine; though this may happen more frequently if waiting for a full week would increase the risk of significant loss (e.g., I was particularly productive on a day and complete a large portion of the code). Secondary machines capable of supporting the project are available in both the School of Engineering and Department of Computer Science Computer Labs.
@@ -58,7 +58,7 @@ The proposed timetable for term 1 can be viewed [here](https://github.com/alimme
 The Christmas Holidays have been left for revision for an exam in week one of the second term. A timetable for term two cannot be completely determined yet as not all deadlines have been set and delays in term one may stall progress. The term will focus on continuing implementation of the model, as well as meeting any extension objectives. In terms of deliverables, work on my presentation will begin in the first few weeks, whereas I will begin my final report after the oral presentation has been given.
 
 ## References
-[1] A. Seabaugh, “The Tunneling Transistor.” [https://quantum-neuroscience.com/wp-content/uploads/2018/07](https://quantum-neuroscience.com/wp-content/uploads/2018/07) The-Tunneling-Transistor.pdf, 2013. Accessed October 5, 2023.
+[1] A. Seabaugh, “The Tunneling Transistor.” [https://quantum-neuroscience.com/wp-content/uploads/2018/07/The-Tunneling-Transistor.pdf](https://quantum-neuroscience.com/wp-content/uploads/2018/07/The-Tunneling-Transistor.pdf), 2013. Accessed October 5, 2023.
 
 [2] S. Grandhi, E. Dupraz, C. Spagnol, V. Savin, and E. Popovici, “CPE: Codeword Prediction Encoder,” in 2016 21th IEEE European Test Symposium (ETS), pp. 1–2, 2016.
 
