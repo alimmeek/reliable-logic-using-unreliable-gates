@@ -13,16 +13,17 @@ The objectives have been listed below, with a more detailed description of imple
 
 ### Essential
 These are the minimum requirements in order for the goals of the project to have been achieved.
-    - Research the various proposed architectures and ECCs.
-    - Select a method of fault tolerance to simulate and fix a small error probability.
-    - Design an implementation of it in the chosen language.
-    - Perform benchmarking to analyse the trade off between accuracy and performance.
+- Research the various proposed architectures and ECCs.
+- Select a method of fault tolerance to simulate and fix a small error probability.
+- Design an implementation of it in the chosen language.
+- Perform benchmarking to analyse the trade off between accuracy and performance.
 
 ### Extension
 Given enough time left after completing the essential objectives, these features would enhance the quality of the 
 project, but are not necessary for its successful completion.
-    - Vary the error probability of the gates - this will determine whether there are limits to the fault  tolerance of the chosen method and whether it is able to hold up to higher error probabilities
-    - Select another method to simulate and compare the relative effectiveness of each
+
+- Vary the error probability of the gates - this will determine whether there are limits to the fault tolerance of the chosen method and whether it is able to hold up to higher error probabilities
+- Select another method to simulate and compare the relative effectiveness of each
 
 
 ## Methodology
@@ -31,8 +32,9 @@ In this project, we use the Von Neumann error model: a _Von Neumann erroneous ga
 Since we are working with hardware, it makes sense to make use of a hardware description language (HDL) to simulate their behaviour. `SystemVerilog` is chosen here, over `Verilog`, owing to its ability to simulate electronic systems, as well as its support for datatypes such as enum, union, struct, string and class. It also allows for coverages design, which will ensure that test cases of interest (one gate errors, final gate errors, all gates error, etc.). Modules will be built to implement each of the gates, as well as the error probability. We can pass the error probability into the top-level module as a parameter, meaning it can be varied independent of the designed architecture.
 
 A testbench will be designed to drive the module. Once this has been realised, simulation software will be used to gather data on the runtime of the simulated circuits. For control, we should run the module with no error correction, in order to get a baseline for runtime and error rate. To improve repeatability, simulations will be ran 10 times, and the results averaged to get the mean runtime. These results can then be plotted. Simulation software does not typically have graphing capabilities; hence I now propose several alternative candidates for graphing.
-    - `Python` has an extensive graphing library, `matplotlib`, which could be used to generate the required graphs. [3] Additionally, a further library, `openpyxl`, exists which can be used to easily manipulate Excel spreadsheets. [4]
-    - The code underpinning the `matplotlib` library is `MATLAB`, hence making it itself a strong candidate for graph generation. Further, its import wizard would ease handling the spreadsheet as the data could be simply imported into a `MATLAB` matrix, and the data plotted with minimal effort.
+
+- `Python` has an extensive graphing library, `matplotlib`, which could be used to generate the required graphs. [3] Additionally, a further library, `openpyxl`, exists which can be used to easily manipulate Excel spreadsheets. [4]
+- The code underpinning the `matplotlib` library is `MATLAB`, hence making it itself a strong candidate for graph generation. Further, its import wizard would ease handling the spreadsheet as the data could be simply imported into a `MATLAB` matrix, and the data plotted with minimal effort.
 
 For each architecture and ECC simulated, I will look at two metrics: how high the gate error probability 
 can be set before performance begins to fail, and the trade-off between any additional latency and the error 
