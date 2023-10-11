@@ -30,7 +30,7 @@ can simply ignore it -- a phenomenon known as \emph{quantum tunnelling}. It has 
 thickness of the \emph{gate oxide} -- a transistor component which electrically separates the gate (responsible for 
 turning the transistor on and off) from the current-carrying channel -- to anything much less than a nanometre will 
 result in too much current flowing across the channel when the transistor is “off”. This on its own, however, is 
-only one of several leakage points, hence methods of fault tolerance are required.\cite{ref1}
+only one of several leakage points, hence methods of fault tolerance are required \cite{ref1}.
 
 
 \section{Objectives}
@@ -57,54 +57,55 @@ project, but are not necessary for its successful completion.
 
 
 \section{Methodology} \label{sec:meth}
-In this project, we use the Von Neumann error model: a \emph{Von Neumann erroneous gate} is simply an ideal logic 
+In this project, the Von Neumann error model is used: a \emph{Von Neumann erroneous gate} is simply an ideal logic 
 gate (one which never errors) cascaded with an error injecting XOR gate. The XOR gate takes a one as input with some 
-probability $p$, called the \emph{gate error probability}, as well as the output from the ideal gate. \cite{ref2} 
+probability $p$, called the \emph{gate error probability}, as well as the output from the ideal gate \cite{ref2}. 
 This can be used to simulate the gate randomly inducing a bit flip. The chosen architecture or ECC will be 
 implemented using these gates to determine how resilient it is to individual gate failures. \\
 
-\noindent Since we are working with hardware, it makes sense to make use of a hardware description language (HDL) to 
+\noindent Since the project deals with hardware, it makes sense to make use of a hardware description language (HDL) to 
 simulate their behaviour. \texttt{SystemVerilog} is chosen here, over \texttt{Verilog}, owing to its ability to 
 simulate electronic systems, as well as its support for datatypes such as enum, union, struct, string and class. It 
 also allows for coverages design, which will ensure that test cases of interest (one gate errors, final gate errors, 
-all gates error, etc.). Modules will be built to implement each of the gates, as well as the error probability. We 
-can pass the error probability into the top-level module as a parameter, meaning it can be varied independent of the 
-designed architecture. \\
+all gates error, etc.). Modules will be built to implement each of the gates, as well as the error probability. The 
+error probability can be passed into the top-level module as a parameter, meaning it can be varied independent of 
+the designed architecture. \\
 
 \noindent A testbench will be designed to drive the module. Once this has been realised, simulation software will be 
-used to gather data on the runtime of the simulated circuits. For control, we should run the module with no error 
-correction, in order to get a baseline for runtime and error rate. To improve repeatability, simulations will be ran 
-10 times, and the results averaged to get the mean runtime. These results can then be plotted. Simulation software 
-does not typically have graphing capabilities; hence I now propose several alternative candidates for graphing.
+used to gather data on the runtime of the simulated circuits. For control, the module should be run with no error 
+correction, in order to get a baseline for runtime and error rate. To improve repeatability, simulations will be 
+repeated 10 times, and the results averaged to get the mean runtime. These results can then be plotted. Simulation 
+software does not typically have graphing capabilities; hence, several alternative candidates for graphing are 
+proposed.
 \begin{itemize}
     \item \texttt{Python} has an extensive graphing library, \texttt{matplotlib}, which could be used to generate 
-    the required graphs. \cite{ref3} Additionally, a further library, \texttt{openpyxl}, exists which can be used to 
-    easily manipulate Excel spreadsheets. \cite{ref4}
+    the required graphs \cite{ref3}. Additionally, a further library, \texttt{openpyxl}, exists which can be used to 
+    easily manipulate Excel spreadsheets \cite{ref4}.
     \item The code underpinning the \texttt{matplotlib} library is \texttt{MATLAB}, hence making it itself a strong 
     candidate for graph generation. Further, its import wizard would ease handling the spreadsheet as the data could 
     be simply imported into a \texttt{MATLAB} matrix, and the data plotted with minimal effort.
 \end{itemize}
 
-\noindent For each architecture and ECC simulated, I will look at two metrics: how high the gate error probability 
+\noindent For each architecture and ECC simulated, two metrics will be examined: how high the gate error probability 
 can be set before performance begins to fail, and the trade-off between any additional latency and the error 
-correction performance. If time has allowed multiple methods to have been simulated, I will also compare their 
-performances with each other.
+correction performance. If time has allowed multiple methods to have been simulated, their performances will also be 
+compared with each other.
 
 
 \section{Resources \& Risks}
 \subsection{Resources}
 The project requires use of a computer and a simulation software capable of supporting \texttt{SystemVerilog}. At 
-the time of writing, I have emailed the SCRTP facilities team to enquire if they have such software and whether I 
-could be granted use, but they have not yet responded. In the event that either I am not given access, or they do 
-not possess the software, I will look into acquiring a license myself.
+the time of writing, the SCRTP facilities team have been emailed to enquire if they have such software and whether 
+use could be granted, but they have not yet responded. In the event that access is not forthcoming, or they do 
+not possess the software, the acquisition of a license will be explored.
 
 \subsection{Risks}
-The primary device that will be used during the project is my personal laptop, therefore, there is a risk of losing 
+The primary device that will be used during the project is a personal laptop, therefore, there is a risk of losing 
 progress in the event of system failure. Using \texttt{git} and \texttt{GitHub} will not only allow the project to 
 be downloaded onto another system, but it also provides version control in the event that work needs to be undone. 
 To reduce the impact of data loss, the repository will be synced, at minimum, weekly with the local machine; though 
-this may happen more frequently if waiting for a full week would increase the risk of significant loss (e.g., I was 
-particularly productive on a day and complete a large portion of the code). Secondary machines capable of supporting 
+this may happen more frequently if waiting for a full week would increase the risk of significant loss (e.g., a 
+particular day was productive and a large portion of the code completed). Secondary machines capable of supporting 
 the project are available in both the School of Engineering and Department of Computer Science Computer Labs.
 
 
@@ -120,8 +121,8 @@ No such issues have been identified.
     \noindent The Christmas Holidays have been left for revision for an exam in week one of the second term. A 
     timetable for term two cannot be completely determined yet as not all deadlines have been set and delays in term 
     one may stall progress. The term will focus on continuing implementation of the model, as well as meeting any 
-    extension objectives. In terms of deliverables, work on my presentation will begin in the first few weeks, 
-    whereas I will begin my final report after the oral presentation has been given.
+    extension objectives. In terms of deliverables, work on the presentation will begin in the first few weeks, 
+    whereas production of the final report will begin after the oral presentation has been given.
 \end{landscape}
 
 
