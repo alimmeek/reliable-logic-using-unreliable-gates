@@ -11,30 +11,12 @@ module randomizer
     output logic           valid_o
 );
 
-//class heads_tails;
-
-//    rand int toss;
-//    constraint flip_dont_flip_ratio {
-//        toss dist {
-//            1 := 50,
-//            0 := 50
-//        };
-//    }
-
-//    function automatic new ();
-//        if (!this.randomize()) $error("Randomisation failed");
-//    endfunction
-//endclass
-
 logic tmp;
 logic [(N-1):0] x_nxt;
 logic [(N-1):0] x_q;
 logic valid_q;
 
 integer seed;
-
-
-// heads_tails coin = new();
 
 genvar I;
 for (I = 0; I < N; I = I + 1) begin
@@ -56,7 +38,7 @@ for (I = 0; I < N; I = I + 1) begin
             .x_i(x_i[I]),
             .y_o(x_nxt[I])
         );
-   end
+    end
 end
 
 always_ff @(posedge clk) begin
