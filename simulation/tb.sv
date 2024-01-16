@@ -1,4 +1,4 @@
-module nand_tb();
+module tb();
 
     localparam ERROR_PROBABILITY = 0;
     localparam N = 10;
@@ -8,8 +8,8 @@ module nand_tb();
 
     logic [(N-1):0] x_i;
     logic [(N-1):0] y_i;
-    logic [(N-1):0] z_o;
-    logic valid_o;
+    logic [(N-1):0] z_q;
+    logic valid_q;
 
     initial begin
         TBCLK = 1'b0;

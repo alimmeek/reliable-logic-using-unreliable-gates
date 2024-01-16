@@ -15,6 +15,7 @@ module circuit
 
 
 logic valid_nxt;
+logic valid_q;
 logic [(N-1):0] z_nxt;
 logic [(N-1):0] z_q;
 
@@ -33,7 +34,7 @@ end
 reliable_nand # (
     .N(N),
     .ERROR_PROBABILITY(ERROR_PROBABILITY)
-) nand (
+) nand_gate (
     .clk(clk),
     .reset_n(reset_n),
     .x_i(x_i),
