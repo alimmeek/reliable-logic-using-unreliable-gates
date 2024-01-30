@@ -1,5 +1,3 @@
-`timescale 1ns / 1ps
-
 module swapper (
     input logic x_i,
     input logic y_i,

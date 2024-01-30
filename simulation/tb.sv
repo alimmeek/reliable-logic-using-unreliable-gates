@@ -19,7 +19,25 @@ module tb();
     initial begin
         nTBRST = 1'b0;
         #100
-        nTBRST = 1'b1;
+        nTBRST = 1'b1;           
+    end
+    
+    
+    initial begin
+        x_i = '0;
+        y_i = '0;
+
+//            integer x_seed, y_seed;
+//            integer x_decision;
+//            integer y_decision;
+//            x_decision = $dist_uniform(x_seed, 1, 100);
+//            y_decision = $dist_uniform(y_seed, 1, 100);
+            
+//            x_i = (x_decision < 50) ? 'b1 : 'b0;
+//            y_i = (y_decision < 50) ? 'b1 : 'b0;
+            
+//            wait (valid_q == 1'b1);
+//            @ (posedge TBCLK);
     end
 
     circuit # (

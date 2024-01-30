@@ -9,29 +9,29 @@ module reliable_nand
     input  logic [(N-1):0] x_i,
     input  logic [(N-1):0] y_i,
 
-    output logic [(N-1):0] z_o,
-    output logic           valid_o
+    output logic [(N-1):0] z_o
 );
 
 logic [(N-1):0] interim1;
+logic [(N-1):0] interim1_nxt;
 logic [(N-1):0] interim2;
+logic [(N-1):0] interim2_nxt;
 logic [(N-1):0] out_q;
 logic [(N-1):0] out_nxt;
-
-logic valid1;
-logic valid2;
-logic valid3;
 
 always_ff @(posedge clk) begin
     if (~reset_n) begin
         out_q <= 'b0;
+        interim1 <= 'b0;
+        interim2 <= 'b0;
     end else begin
         out_q <= out_nxt;
+        interim1 <= interim1_nxt;
+        interim2 <= interim2_nxt;
     end
 end
 
 assign z_o = out_q;
-assign valid_o = valid1 && valid2 && valid3;
 
 multiplexing_unit # (
     .N(N),
@@ -41,8 +41,7 @@ multiplexing_unit # (
     .reset_n(reset_n),
     .x_i(x_i),
     .y_i(y_i),
-    .z_o(interim1),
-    .valid_o(valid1)
+    .z_o(interim1_nxt)
 );
 
 multiplexing_unit # (
@@ -53,8 +52,7 @@ multiplexing_unit # (
     .reset_n(reset_n),
     .x_i(interim1),
     .y_i(interim1),
-    .z_o(interim2),
-    .valid_o(valid2)
+    .z_o(interim2_nxt)
 );
 
 multiplexing_unit # (
@@ -65,8 +63,7 @@ multiplexing_unit # (
     .reset_n(reset_n),
     .x_i(interim2),
     .y_i(interim2),
-    .z_o(out_nxt),
-    .valid_o(valid3)
+    .z_o(out_nxt)
 );
 
 
