@@ -8,7 +8,8 @@ module tb();
 
     logic [(N-1):0] x_i;
     logic [(N-1):0] y_i;
-    logic [(N-1):0] z_q;
+    logic [(N-1):0] sum_q;
+    logic [(N-1):0] carry_q;
     logic valid_q;
 
     initial begin
@@ -24,23 +25,11 @@ module tb();
     
     
     initial begin
-        x_i = '0;
-        y_i = '0;
-
-//            integer x_seed, y_seed;
-//            integer x_decision;
-//            integer y_decision;
-//            x_decision = $dist_uniform(x_seed, 1, 100);
-//            y_decision = $dist_uniform(y_seed, 1, 100);
-            
-//            x_i = (x_decision < 50) ? 'b1 : 'b0;
-//            y_i = (y_decision < 50) ? 'b1 : 'b0;
-            
-//            wait (valid_q == 1'b1);
-//            @ (posedge TBCLK);
+        x_i = '1;
+        y_i = '1;
     end
 
-    circuit # (
+    half_adder # (
         .N(N),
         .ERROR_PROBABILITY(ERROR_PROBABILITY)
     ) uut (
@@ -50,7 +39,8 @@ module tb();
         .x_i(x_i),
         .y_i(y_i),
 
-        .z_o(z_q),
+        .sum_o(sum_q),
+        .carry_o(carry_q),
         .valid_o(valid_q)
     );
 endmodule

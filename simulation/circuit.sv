@@ -13,23 +13,39 @@ module circuit
     output logic           valid_o
 );
 
-
 logic valid_nxt;
 logic valid_q;
+logic [(N-1):0] z_prev;
 logic [(N-1):0] z_nxt;
 logic [(N-1):0] z_q;
+logic [1:0] counter;
+
 
 always_ff @(posedge clk) begin
     if (~reset_n) begin
         z_q <= 'b0;
+        z_prev <= 'b0;
         valid_q <= 1'b0;
+        counter <= 2'b0;
     end else begin
-        if (valid_nxt) begin
-            z_q <= z_nxt;
+        if (z_prev != z_q) begin
+            if (counter < 2'd3) begin
+                counter <= counter + 1'b1;
+            end else begin
+                counter <= 2'd3;
+            end
         end
-        valid_q <= valid_nxt;
+        z_prev <= z_q;
+        z_q <= z_nxt;
+        valid_q <= (counter >= 2'd3) ? 1'b1 : 1'b0;
     end
 end
+
+assign z_o = z_q;
+assign valid_o = valid_q;
+
+assign z_o = z_q;
+assign valid_o = valid_q;
 
 reliable_nand # (
     .N(N),
@@ -39,8 +55,8 @@ reliable_nand # (
     .reset_n(reset_n),
     .x_i(x_i),
     .y_i(y_i),
-    .z_o(z_nxt),
-    .valid_o(valid_nxt)
+    .z_o(z_nxt)
 );
+
 
 endmodule

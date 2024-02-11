@@ -20,7 +20,7 @@ logic decision;
 always_comb begin
     flip = $dist_uniform(seed, 1, 100);
     decision = (flip < (ERROR_PROBABILITY + 1)) ? 1'b1: 1'b0;
-    z_nxt = ~(x_i && y_i);
+    z_nxt = ~(x_i && y_i) ^ decision;
 end
 
 
