@@ -361,6 +361,4 @@ erroneous_xor # (
     .z_o(p3_nxt)
 );
 
-
-
 endmodule

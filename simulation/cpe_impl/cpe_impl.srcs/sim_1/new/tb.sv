@@ -6,7 +6,9 @@ module tb();
     logic nTBRST;
 
     logic [10:0] x_i;
-    logic [14:0] codeword;
+    logic [10:0] y_i;
+    logic [10:0] sum_q;
+    logic [10:0] carry_q;
 
     initial begin
         TBCLK = 1'b0;
@@ -22,16 +24,19 @@ module tb();
     
     initial begin
         x_i = '1;
+        y_i = '1;
     end
 
-    nand_top # (
+    half_adder # (
         .ERROR_PROBABILITY(ERROR_PROBABILITY)
     ) uut (
         .clk(TBCLK),
         .reset_n(nTBRST),
 
-        .msg(x_i),
-        
-        .codeword(codeword)
+        .x_i(x_i),
+        .y_i(y_i),
+
+        .sum_o(sum_q),
+        .carry_o(carry_q)
     );
 endmodule
