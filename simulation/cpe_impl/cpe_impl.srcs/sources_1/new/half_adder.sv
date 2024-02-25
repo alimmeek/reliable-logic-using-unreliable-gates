@@ -5,36 +5,36 @@ module half_adder
     input  logic clk,
     input  logic reset_n,
 
-    input  logic [10:0] x_i,
-    input  logic [10:0] y_i,
+    input  logic [3:0] x_i,
+    input  logic [3:0] y_i,
 
-    output logic [10:0] sum_o,
-    output logic [10:0] carry_o
+    output logic [3:0] sum_o,
+    output logic [3:0] carry_o
 );
 
-logic [14:0] interim1;
-logic [14:0] interim1_nxt;
-logic [14:0] interim2;
-logic [14:0] interim2_nxt;
-logic [14:0] interim3;
-logic [14:0] interim3_nxt;
-logic [14:0] interim4;
-logic [14:0] interim4_nxt;
-logic [14:0] interim5;
-logic [14:0] interim5_nxt;
+logic [6:0] interim1;
+logic [6:0] interim1_nxt;
+logic [6:0] interim2;
+logic [6:0] interim2_nxt;
+logic [6:0] interim3;
+logic [6:0] interim3_nxt;
+logic [6:0] interim4;
+logic [6:0] interim4_nxt;
+logic [6:0] interim5;
+logic [6:0] interim5_nxt;
 
-logic [14:0] x_encoded;
-logic [14:0] x_encoded_nxt;
-logic [14:0] y_encoded;
-logic [14:0] y_encoded_nxt;
-logic [10:0] carry_q;
-logic [10:0] carry_nxt;
-logic [14:0] carry_encoded_q;
-logic [14:0] carry_encoded_nxt;
-logic [10:0] sum_q;
-logic [10:0] sum_nxt;
-logic [14:0] sum_encoded_q;
-logic [14:0] sum_encoded_nxt;
+logic [6:0] x_encoded;
+logic [6:0] x_encoded_nxt;
+logic [6:0] y_encoded;
+logic [6:0] y_encoded_nxt;
+logic [3:0] carry_q;
+logic [3:0] carry_nxt;
+logic [6:0] carry_encoded_q;
+logic [6:0] carry_encoded_nxt;
+logic [3:0] sum_q;
+logic [3:0] sum_nxt;
+logic [6:0] sum_encoded_q;
+logic [6:0] sum_encoded_nxt;
 
 always_ff @(posedge clk) begin
     if (~reset_n) begin

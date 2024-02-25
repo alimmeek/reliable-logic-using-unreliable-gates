@@ -4,26 +4,26 @@ module nand_top # (
   input clk,
   input reset_n,
   
-  input  [14:0] x_i,
-  input  [14:0] y_i,
+  input  [6:0] x_i,
+  input  [6:0] y_i,
   
-  output [14:0] z_o
+  output [6:0] z_o
 );
 
-logic [10:0] x_decoded;
-logic [10:0] x_decoded_nxt;
-logic [10:0] y_decoded;
-logic [10:0] y_decoded_nxt;
-logic [10:0] result;
-logic [14:0] encoded;
-logic [14:0] encoded_nxt;
+logic [3:0] x_decoded;
+logic [3:0] x_decoded_nxt;
+logic [3:0] y_decoded;
+logic [3:0] y_decoded_nxt;
+logic [3:0] result;
+logic [6:0] encoded;
+logic [6:0] encoded_nxt;
 
 always_ff @(posedge clk) begin
   if (~reset_n) begin
-    x_decoded <= 10'b0;
-    y_decoded <= 10'b0;
-    result <= 10'b0;
-    encoded <= 14'b0;
+    x_decoded <= 3'b0;
+    y_decoded <= 3'b0;
+    result <= 3'b0;
+    encoded <= 6'b0;
   end else begin
     x_decoded <= x_decoded_nxt;
     y_decoded <= y_decoded_nxt;
