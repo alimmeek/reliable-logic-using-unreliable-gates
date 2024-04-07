@@ -1,0 +1,29 @@
+% !TEX root =  ../Report.tex
+\section{Objectives}
+\label{sec:objs}
+
+\noindent There are many previously documented architectures for fault tolerance to be drawn from in this project. \\
+
+\noindent The essential requirements for the project are listed below, using the MoSCoW system to allow for better prioritisation. The 
+``Must'' and ``Should'' objectives are determined to be the minimum requirements in order for the goals of the project to have been 
+achieved. The “Could” objectives enhance the quality of the project but are not necessary for its successful completion. A more detailed 
+description of implementation is given under the Implementation section of the relevant method.
+
+\begin{table}[H] 
+\begin{tabular}{| M{0.47\textwidth} | M{0.47\textwidth} |}
+    \hline
+    Requirement & Priority  \\ \hline
+    Research the various proposed architectures and ECCs & \textbf{\emph{{MUST}}} \\ \hline
+    Select a method of fault tolerance to simulate & \textbf{\emph{{MUST}}} \\ \hline
+    Design an implementation in the chosen language & \textbf{\emph{{MUST}}} \\ \hline
+    Design a testbench to analyse the accuracy vs performance trade off & \textbf{\emph{{MUST}}} \\ \hline
+    Vary the error probability of the gates & \textbf{\emph{{SHOULD}}} \\ \hline
+    Repeat with a software method and compare their advantages and disadvantages & \textbf{\emph{{COULD}}} \\ \hline
+\end{tabular}
+\caption{Project requirements and their associated MoSCoW priority}
+\label{table:reqs}
+\end{table}
+
+\noindent Implementation of the hardware solution to fault tolerance targets the Artix 7 xc7a100tcsg324-1 device, chosen as it allows for rapid 
+prototyping and easy testing using tools with which familiarity has been gained from prior exposure through the course. The software 
+solution has been tested on the Department of Computer Science`s system to ensure repeatability. 

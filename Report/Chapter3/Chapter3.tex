@@ -1,0 +1,252 @@
+%!TEX root =  ../Report.tex
+
+\section{Background and Related Work}                               
+\label{sec:bgrw}
+
+\noindent This section details the background necessary to understand the context of the project, drawing on the shrinking gate oxide as 
+an example error source. Related works are also introduced which are used and built upon by the project.
+
+\subsection{Reliability and Fault Tolerance}
+\label{sec:bgrw-rft}
+\noindent This project is, at its core, a study on reliable systems and fault tolerance. In accordance with the IEEE definition, 
+\emph{reliability} is defined to be a measure of the ability of a system to produce the intended function within a specified time 
+period \cite{ieee_reliability}. \\
+
+\noindent When the system does not behave as expected, there is a \emph{defect} -- this is an \emph{unintentional} difference between the 
+implemented hardware and the intended design, it does not include any logical errors introduced by the designer. An \emph{error} is the 
+wrong output from some faulty system, whose cause is a defect. These can be classified into three groups, dependent on their stability 
+and concurrence \cite{grandhi2019}:
+\begin{itemize}
+    \item \emph{Permanent errors}, which are caused by irreversible physical changes in the hardware. Most commonly, these arise from the 
+    manufacturing process; though they can also arise from wear and tear as the circuit becomes older. Once a permanent error occurs, it 
+    does not vanish.
+    \item \emph{Intermittent errors}, which are occasional error bursts occurring semi-frequently, but not as often as permanent error. 
+    They are often caused by unstable or aging hardware are influenced by external factors such as temperature or voltage change. They 
+    often precede the occurrence of a permanent error and are difficult to detect as they may only occur under specific constraints and 
+    input combinations.
+    \item \emph{Transient errors}, which are caused by temporary environmental conditions such as radiation or noise from other parts of 
+    the hardware. This type of error is of particular interest in spaceborne computer systems, which must be shielded against cosmic rays 
+    (highly energetic atomic nuclei or other particles travelling through space at relativistic speeds \cite{drury2012origin}) to reduce 
+    the single event upsets (SEUs), which can lead to component degradation and destruction if they trigger a latch-up (short circuit 
+    current) \cite{leppala1989protection}. Transient errors themselves do not leave any permanent marks on the hardware and are normally 
+    random and difficult to detect.
+\end{itemize}
+
+\noindent If error detection and recovery do not occur quickly enough, the system will be unable to provide a service -- this is known as 
+a \emph{failure}. \emph{Fault tolerance} then, is the capability of the system to recover from an error without failing. Techniques 
+include fault avoidance, fault masking, detection of erroneous or compromised system operation, containment of error propagation and 
+recovery to normal system operation \cite{grandhi2019}.
+
+\subsubsection{Transistor Errors}
+\label{sec:rft-te}
+\noindent Logic gates are physically implemented as transistors. The most commonly used process currently is CMOS, which uses two types 
+of MOSFETs -- pMOS and nMOS. Each transistor consists of the gate, an insulating layer of silicon dioxide, and the silicon wafer (also 
+known as the body). For nMOS transistors, the body is p-type (positively charged), and there are two n-type (negatively charged) 
+semiconductor regions, called the \emph{source} and the \emph{drain}, adjacent to the gate. For pMOS transistors, it is the 
+opposite \cite{vlsi}. \\
+
+\noindent The gate controls the flow of current between the source and the drain. Consider an nMOS transistor, whose body is tied to 
+ground. If the gate is also at ground, then no current flows and the transistor is off. As the voltage on the gate increases, free 
+electrons become attracted to the $Si-SiO_2$ boundary. If voltage is increased enough, a thin channel is formed allowing current to flow. 
+Again, the operation of pMOS transistors is the opposite \cite{vlsi}. \\
+
+\noindent As transistor density increases in accordance with Moore`s Law \cite{moore}, components are at the nanoscale where physical 
+limits are approached with high levels of variability and manufacturing defects. At these limits, quantum mechanics comes into play: where 
+electronic barriers were once thick enough to block current, they are now thin enough that electrons can simply ignore it -- a phenomenon 
+known as \emph{quantum tunnelling}. It has been identified that by reducing the thickness of the gate oxide -- the component which 
+electrically separates the gate from the current-carrying channel -- to anything much less than a nanometre will result in too much 
+current flowing across the channel when the transistor is ``off''. This on its own, however, is only one of several leakage points. 
+Industry roadmaps project that miniaturisation will be able to continue until 2026, where the projected size is 5.9nm -- a quarter of 
+their current size -- assuming materials which can better reduce leaks are discovered \cite{tunnel}.
+
+\subsection{System Verilog}
+\label{sec:bgrw-sv}
+
+\subsection{FPGAs}
+\label{sec:bgrw-fpga}
+\noindent This project uses the Xilinx Artix-7-100T device as the target device for implementation, owing to previous experience with the 
+device gained through the course. \\
+
+\noindent Field Programmable Gate Arrays (FPGAs) were introduced to address the gap between CPLD and ASIC services, by providing a 
+reduced-cost logic platform with the densities and I/O capabilities of gate arrays, and the programmable nature of CPLDs. Sequential and 
+combinatorial logic is implemented in slices, which contain look-up tables (LUTs), storage, and additional cascading logic. The boards 
+themselves also contain other resources, such as block RAM, DSP blocks and various I/O capabilities. To illustrate, below is the full 
+feature list for the Artix-7 board. \\
+
+\begin{table}[H] 
+\begin{adjustwidth}{-2.2cm}{-1.5cm}
+    \resizebox{1.3\textwidth}{!}{\begin{tabular}{| c | c | c | c | c | c | c | c | c | c | c | c | c |}
+        \hline
+        Logic & \multicolumn{2}{c|}{CLBs} & DSP48E1 & \multicolumn{3}{c|}{Block RAM Blocks} & CMTs & PCIe & GTPs & XADC & Total I/O & Max User \\ \cline{2-3} \cline{5-7}
+        cells & Slices & Max Distributed RAM /Kb & Slices & 18Kb & 36Kb & Max /Kb & & & & Blocks & Banks & I/O \\ \hline
+        101440 & 15850 & 1188 & 240 & 270 & 135 & 4860 & 6 & 1 & 8 & 1 & 6 & 300 \\ \hline
+    \end{tabular}}
+\end{adjustwidth}
+    \caption{Table showing the resources available on the Xilinx Artix-7-100T device. Note: CLBs are Configurable Logic Blocks, DSP48E1 are 
+    the DSP slices, each containing a pre-adder, a 25 x 18 multiplier, an adder, and an accumulator, CMTs are Clock Management Tiles, GTPs 
+    are low-power Gigabit Transceivers, and XADC is the user configurable analog interface.}
+    \label{table:fpga}
+\end{table}
+
+
+\noindent FPGAs are often used in prototyping hardware designs due to their ability to be quickly reconfigured, making it ideal for proof 
+of concept and simulating designs. While implementation on a board is not necessary for simulation in the Vivado suite, it does give 
+metrics such as usage and power which are analysed in a later section. \\
+
+\noindent The hardware design flow for FPGAs begins with writing code in a hardware description language (HDL), in this case System 
+Verilog. This code can then be synthesised into a netlist of components, which are mapped to the resources of the target device.
+
+
+\subsection{Von Neumann Erroneous Gate}
+\label{sec:bgrw-vneg}
+
+\noindent To model the behaviour of an unreliable gate, the \emph{Von Neumann erroneous gate model} is used [Fig]. \\
+
+\begin{center}
+Figure -- Schematic for the Von Neumann Erroneous gate model. \\
+\end{center}
+
+\noindent In this model, there are two, assumed to be ideal (i.e., a gate that never errors), logic gates cascaded with each other. The 
+first gate provides the computation -- it can be whichever gate is needed. The XOR gate is the error-injecting gate. It takes an input of 
+$1$ with some pre-defined probability $p$, known as the \emph{gate error probability}, which induces a bit flip in the output. Under this 
+model, the XOR gate determines the stochastic error behaviour (the error can be well-described by a random probability distribution 
+\cite{pavliotis2014stochastic}).
+
+\subsection{NAND Multiplexing}
+\label{sec:bgrw-nand}
+
+\noindent NAND multiplexing was first introduced by von Neumann in his lecture series \cite{vonneumann} as a solution to faulty 
+components, which are ``statistically subject to failure''. The concept of multiplexing is somewhat trivial: the method is to replicate 
+the single line some N times, where N is a large integer. Then a threshold $\Delta$, known as the \emph{critical (fiduciary) level} is 
+set, $0 < \Delta < \frac{1}{2}$. The bundle is interpreted as high when $\geq (1 - \Delta)N$ lines are high, and as low when $\leq \Delta 
+N$ lines are high. Any level between these values is undecided. \\
+
+\noindent A NAND multiplexing unit, shown in fig, comprises of three main components. The first is a \emph{randomising unit}, R, which 
+randomly pairs wires from the two input bundles together into one of the N duplicated faulty NAND gates, that fails (induces a bit flip) 
+with gate error probability $\epsilon$. Each gate in the original, non-multiplexed, circuit is replaced with three of these multiplexing 
+units connected in series. Within a stage, each of the duplicated computations occur simultaneously. The first is the \emph{executive 
+unit}, responsible for carrying out the original computation. The final two comprise the \emph{restorative unit}, which restores the 
+excitation level of the output bundle to a nominal level \cite{qi2005markov}. Note that two units are needed here due to the inverting 
+nature of the NAND gate: having only one unit as the restorer would result in a flipped output. \\ 
+
+\noindent A stochastic process is said to be \emph{Markovian} if its future behaviour is dependent on only the present state, and not any 
+past state \cite{jiang2010application}. Since NAND gates are combinational, there is no memory component and thus the past state is not 
+saved so cannot affect the behaviour of the circuit. Hence, the NAND multiplexed architecture is Markovian, and a Markov chain model can 
+be derived for both an individual gate and the system as a whole. Consider the NAND multiplexing unit in Fig, from \cite{qi2005markov}:
+
+\begin{itemize}
+    \item Let $K$ be a random variable representing the number of excited wires in a bundle of $N$ wires, then $K/N$ is the bundles's 
+    \emph{excitation level}.
+    
+    \item Assuming each wire has a uniform probability $Z$ of being excited, $K$ follows a binomial distribution, where 
+    $P(K = k) = \begin{bmatrix} N \\ k \end{bmatrix} Z^k (1 - Z)^{N - k}$.
+
+    \item The mean and variance of $K$ is $NZ$ and $NZ(1 - Z)$ respectively. The excitation level is a normalised version of $K$ with 
+    mean value $Z$.
+
+    \item With fixed $Z$ and large $N$, then by the central limit theorem, the distribution for $K$ can be approximated by the normal 
+    distribution as $f(k) = \frac{1}{\sqrt{2\pi}\sqrt{NZ(1-Z)}}e^{\frac{1}{2} \left(\frac{k - NZ}{\sqrt{NZ(1-Z)}}\right)^2}$.
+
+    \item The number of stimulated wires in an output bundle of size $N$ is described by a stochastic process $K = {K_n : n \in M}$, where 
+    $n$ is the stage number, $K_n \in J = \{0, 1, \ldots, N\}$ is the state of the process $K$ at stage $n$, and $M = \{0, 1,\ldots\}$.
+    
+    \item The relation between the input and output distributions of each multiplexing unit (stage) is described by the first-order Markov 
+    chain $P(K_{n+1} = j_{n+1} | K_0 = j_0, \ldots, K_n = j_n) = P(K_{n+1} = j_{n+1} | K_n = j_n)$.
+
+    \item The probability transition matrix $\textbf{P}$ is given by
+    \begin{center}
+        $ \textbf{P} = \begin{bmatrix}
+            P(0|0) & P(1|0) & \ldots & P(N|0) \\
+            P(0|1) & P(1|1) & \ldots & P(N|1) \\
+            \vdots &        & \vdots &        \\
+            P(0|N) & P(1|N) & \ldots & P(N|N) \\
+        \end{bmatrix} $ \\
+    \end{center}
+    \noindent where the matrix element $P(j|i)$ is the conditional probability $P(K_{n+1} = j | K_n = i)$.
+
+    \item Assume the two inputs to each gate are independent and identically distributed. From $K$'s binomial distribution, $P(j|i) = 
+    (N/j)Z(i)^j(1-Z(i))^{N-j}$, $Z(i) = (1 - \epsilon) - (1 - 2\epsilon)(i/N)^2$, where $\epsilon$ is the gate error probability.
+
+    \item Let $\overrightarrow{\pi}_0 = [\pi_0(0), \pi_0(1), \ldots, \pi_0(N)]$ be the initial input distribution, then the output 
+    distribution at the $n$th stage is $\overrightarrow{\pi}_n = [\pi_n(0), \pi_n(1), \ldots, \pi_n(N)] = \overrightarrow{\pi}_0\textbf{P}^n$.
+
+\end{itemize}
+
+\subsection{Multithreading}
+\label{sec:bgrw-mult}
+A \emph{thread} is a single unit of execution within a processor, containing a thread ID, program counter, register set and stack. It also 
+shares resources such as code, data, the process`s heap, opened files and signals with the process which created it, and any other thread 
+created by the process. Multithreading a program provides many advantages, namely \cite{os}:
+\begin{itemize}
+    \item Responsiveness -- part of the program may be able to continue to run even if part of it is blocked or performing a lengthy 
+    operation.
+    \item Resource sharing -- two processes can only share resources through techniques such as shared memory and message passing. By 
+    default, threads share the memory and resources of the process to which they belong, allowing the process to have several threads of 
+    activity within the same address space.
+    \item Economy -- thread creation is much less costly than process creation.
+    \item Scalability -- a single-threaded process can only run on one processor, regardless of how many are available. Multithreading 
+    unlocks the full power of multiprocessor architectures.
+\end{itemize}
+
+\noindent User processes create user-level threads. These must be mapped to kernel-level threads before they can be scheduled and executed 
+on a CPU. There exist different mappings between user- and kernel-level threads, each with their own advantages and disadvantages 
+\cite{os}. These are shown in the table below.
+
+\begin{table}[H] 
+    \begin{tabular}{| M{0.3\textwidth} | M{0.3\textwidth} | M{0.3\textwidth} |}
+        \hline
+        Model & Advantages & Disadvantages  \\ \hline
+        One-to-one & Kernel aware of all threads running within user process, so can completely manage the threads & Creating each user-level thread involves the kernel, so is more expensive, user process is limited to OS thread management policies \\ \hline
+        Many-to-one & Less overhead, more flexibility in thread management & Multiple user-level threads cannot run in parallel, a blocked user-level thread blocks the entire process \\ \hline
+        Many-to-many & Kernel threads can run in parallel, programmer decides how many kernel threads to use and how many user threads are mapped to each one, less overhead & Difficulties in adding prioritisation \cite{brown2007c++} \\ \hline
+    \end{tabular}
+    \caption{Thread mapping models and their associated advantages and disadvantages}
+    \label{table:thread}
+\end{table}
+
+\subsubsection{Multicore}
+\label{sec:mult-core}
+\noindent Multiprocessor (multicore) systems have been developed in recent years to combat the diminishing returns of single-core 
+improvements []. On a system with multiple cores, concurrency allows for threads to run in parallel, as the system can assign a separate 
+thread to each core \cite{os}. It is noted that hyperthreading - which allows multiple threads to run on the same core - have been 
+developed []; however, within this project, it is assumed that at most one thread will be running on a core at any one time.
+
+\subsubsection{Processor Affinity}
+\label{sec:mult-pa}
+
+\noindent \emph{Processor affinity} is the probability of dispatching a thread to the processor that was previously executing it 
+\cite{ibm}. In many real-time multiprocessor operating systems, processor affinity is used to implement a more flexible migration 
+(scheduling) strategy. By default, Linux opts for soft affinity, that is, it will attempt to keep a process running on the same processor 
+where possible, but this is not guaranteed. For situations where the affinity needs to be guaranteed, the system call 
+$\texttt{sched\_setaffinity()}$ is provided which allows the processor affinity of a process or thread to be specified, such that it may 
+not execute on a processor that is not part of this affinity. That is, processor affinities enable the programmer to \emph{bind} a 
+process to some subset of processors in the system, so that a process can only migrate to the processor(s) that it is bound to 
+\cite{gujarati2015multiprocessor}. \\
+
+\noindent This is mainly used to boost throughput-oriented computing, as it should lead to an improved use of cache, or at least one which 
+is only limited by the subset of processes running on the core. It may also be used in heterogenous platforms, whereby tasks can be 
+assigned to specialized cores to reduce power consumption and increase performance \cite{gujarati2015multiprocessor}.
+
+\subsection{Parity Codes}
+\label{sec:bgrw-pc}
+
+\noindent Consider a computational circuit to be a specialised digital communication system -- the only difference is that instead of 
+inter-system communication, the circuit facilitates intra-circuit communication. When a transmission channel produces errors, it degrades 
+the quality of communication \cite{comms}. \\
+
+\noindent Performance can be improved by adding redundancy to the transmitted sequence, allowing the receiver to detect and/or correct 
+errors introduced during transmission, known as \emph{forward-error correction} (FEC). Here, error detection means the ability of a 
+receiver to detect whether one or more errors have occurred during transmission. It does not guarantee the ability to correct the 
+aforementioned errors, nor that the receiver can detect errors in all circumstances \cite{comms}. \\
+
+\noindent For a binary vector with $k$ information bits $[x_1, x_2, …, x_k]$, a \emph{parity bit} can be computed such that the overall 
+number of ones present in the vector is even or odd. That is, we add an extra, redundant, bit $p$ such that:
+\begin{itemize}
+    \item For odd parity: $x_1 \oplus x_2 \oplus ... \oplus x_k \oplus p = 1$
+    \item For even parity: $x_1 \oplus x_2 \oplus ... \oplus x_k \oplus p = 0$
+\end{itemize}
+
+\noindent Where $\oplus$ represents modulo-2 addition. The receiver performs the same calculation and checks whether parity is obeyed. If 
+not, it is known that the transmission was corrupted. With a single parity bit, the receiver is able to detect when an odd number of 
+errors have occurred -- an even number of errors would mask themselves -- demonstrating the previously stated limitations of the parity 
+system \cite{comms}.
